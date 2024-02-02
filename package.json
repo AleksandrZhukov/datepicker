@@ -1,6 +1,6 @@
 {
   "name": "azdatepicker",
-  "version": "2.7.3",
+  "version": "2.7.4",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
   "type": "module",
   "main": "dist/index.cjs",
@@ -70,7 +70,7 @@
     "@chakra-ui/react": "^1.8.6 || ^2",
     "date-fns": "^2.25.0",
     "dayjs": "^1.11.9",
-    "framer-motion": "^6",
+    "framer-motion": ">=6.0.0",
     "react": "^17.0.2 || ^18",
     "react-dom": "^17.0.2 || ^18"
   }
