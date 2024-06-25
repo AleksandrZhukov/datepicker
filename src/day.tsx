@@ -21,6 +21,7 @@ export function CalendarDay<TDate, TLocale>({
     <Button
       aria-current={variant === 'selected' ? 'date' : false}
       aria-label={context.adapter.format(day, 'monthDay')}
+      aria-details={variant}
       onClick={() => onSelectDates(day)}
       isDisabled={isDisabled}
       sx={{ ...styles, ...props }}
