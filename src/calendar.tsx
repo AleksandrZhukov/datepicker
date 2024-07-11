@@ -81,11 +81,30 @@ export function Calendar<TDate, TLocale>(
     weekStartsOn: props.weekStartsOn,
   })
 
+  const getFirstViewDate = () => {
+    const firstSelectedDate =
+      (isSingleMode(props) ? props.value : props.value?.start) || adapter.today
+
+    if (props.disableFutureDates) {
+      const differenceInMonths = adapter.differenceInMonths(
+        adapter.today,
+        firstSelectedDate
+      )
+
+      if (differenceInMonths < (props.months || 1)) {
+        return adapter.addMonths(
+          firstSelectedDate,
+          ((props.months || 1) - differenceInMonths - 1) * -1
+        )
+      }
+    }
+
+    return firstSelectedDate
+  }
+
   const { resetDate, ...values } = useCalendar<TDate, TLocale>({
     allowOutsideDays: props.allowOutsideDays,
-    blockFuture: props.disableFutureDates,
-    start:
-      (isSingleMode(props) ? props.value : props.value?.start) || adapter.today,
+    start: getFirstViewDate(),
     months: props.months,
     adapter,
   })

@@ -3,7 +3,6 @@ import { CalendarAdapter } from './adapters'
 
 export type UseCalendarProps<TDate, TLocale> = {
   start: TDate
-  blockFuture?: boolean | TDate
   allowOutsideDays?: boolean
   months?: number
   adapter: ReturnType<CalendarAdapter<TDate, TLocale>>
@@ -12,24 +11,16 @@ export type UseCalendarProps<TDate, TLocale> = {
 export function useCalendar<TDate, TLocale>({
   start,
   months = 1,
-  blockFuture,
   allowOutsideDays,
   adapter,
 }: UseCalendarProps<TDate, TLocale>) {
-  const initialState = blockFuture
-    ? typeof blockFuture === 'boolean' ||
-      adapter.differenceInMonths(blockFuture, start) < 1
-      ? adapter.addMonths(start, -1)
-      : start
-    : start
-
-  const [date, setDate] = useState(initialState)
+  const [date, setDate] = useState(start)
 
   const actions = useMemo(
     function actionsFn() {
       const nextMonth = () => setDate(prevSet => adapter.addMonths(prevSet, 1))
       const prevMonth = () => setDate(prevSet => adapter.addMonths(prevSet, -1))
-      const resetDate = () => setDate(initialState)
+      const resetDate = () => setDate(start)
 
       const dates = Array.from({ length: months }, (_, i) => {
         const month = adapter.addMonths(date, i)
@@ -58,7 +49,7 @@ export function useCalendar<TDate, TLocale>({
         dates,
       }
     },
-    [allowOutsideDays, date, initialState, months]
+    [allowOutsideDays, date, start, months]
   )
 
   return {
