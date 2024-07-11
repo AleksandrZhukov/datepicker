@@ -1,6 +1,6 @@
 {
   "name": "azdatepicker",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "description": "A simple react datepicker build with chakra-ui and date-fns",
   "type": "module",
   "main": "dist/index.cjs",
